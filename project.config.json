@@ -8,6 +8,7 @@
 		"newFeature": true
 	},
 	"miniprogramRoot": "./dist/",
+	"qcloudRoot": "./server/",
 	"compileType": "miniprogram",
 	"appid": "wx38b2d2dbd015bd9a",
 	"projectname": "yzrb",
