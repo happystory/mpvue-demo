@@ -1,9 +1,10 @@
 // 配置项
 
-const host = 'http://localhost:5757'
+const host = 'https://lm1j6mkv.qcloud.la'
 
 const config = {
-  host
+  host,
+  loginUrl: `${host}/weapp/login`
 }
 
 export default config

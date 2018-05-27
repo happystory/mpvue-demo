@@ -15,3 +15,15 @@ export function get (url, data) {
     })
   })
 }
+
+export function showSuccess (text) {
+  wx.showToast({
+    title: text,
+    icon: 'success'
+  })
+}
+
+export default {
+  get,
+  showSuccess
+}
