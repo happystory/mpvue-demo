@@ -1,8 +1,14 @@
 <template>
   <div class="container">
     <div class="userinfo">
-      <img :src="userinfo.avatarUrl" alt="avatar">
-      <p>{{userinfo.nickName}}</p>
+      <div v-if="userinfo.nickName">
+        <img :src="userinfo.avatarUrl" alt="">
+        <p>{{userinfo.nickName}}</p>
+      </div>
+      <div v-else>
+        <img :src="avatarUrl" alt="">
+        <p>未登录</p>
+      </div>
     </div>
 
     <YearProgress></YearProgress>
@@ -49,11 +55,10 @@ export default {
       })
     },
     doLogin (options) {
-      var that = this;
-      console.log(1)
+      let self = this;
       wx.login({
         success: function (loginResult) {
-          var loginParams = {
+          let loginParams = {
             code: loginResult.code,
             encryptedData: options.mp.detail.encryptedData,
             iv: options.mp.detail.iv,
@@ -62,9 +67,18 @@ export default {
           qcloud.requestLogin({
             loginParams,
             success() {
-              util.showSuccess('登录成功')
-              that.userinfo = options.mp.detail.userInfo
-              wx.setStorageSync('userinfo', options.mp.detail.userInfo)
+              // util.showSuccess('登录成功')
+              // self.userinfo = options.mp.detail.userInfo
+              // wx.setStorageSync('userinfo', options.mp.detail.userInfo)
+              qcloud.request({
+                url: config.userUrl,
+                login: true,
+                success (userRes) {
+                  util.showSuccess('登录成功')
+                  wx.setStorageSync('userinfo', userRes.data.data)
+                  self.userinfo = userRes.data.data
+                }
+              })
             },
             fail(error) {
               // util.showModel('登录失败', error)
