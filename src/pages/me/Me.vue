@@ -44,12 +44,19 @@ export default {
     }
   },
   methods: {
+    async addBook (isbn) {
+      const res = await util.post('/weapp/addbook', {
+        isbn,
+        openid: this.userinfo.openId
+      })
+      util.showModal('添加成功', `${res.data.title}添加成功`)
+    },
     scanBook () {
       wx.scanCode({
         success: (res) => {
+          console.log(res)
           if (res.result) {
-            // this.addBook(res.result)
-            console.log(res.result)
+            this.addBook(res.result)
           }
         }
       })
